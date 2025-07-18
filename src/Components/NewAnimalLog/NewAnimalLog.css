@@ -1,0 +1,67 @@
+
+ .log-page {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background: url('https://www.transparenttextures.com/patterns/purty-wood.png'); /* optional texture */
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+  color: #3b4cca; /* Pokémon blue */
+}
+
+.log-form {
+  background: #f7f7f7;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 4px solid #ffcb05; /* Pokémon yellow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #2a75bb; /* darker Pokémon blue */
+  text-shadow: 1px 1px 0 #fff;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #3b4cca;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #222;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-button {
+  background: linear-gradient(to bottom, #ff1c1c, #cc0000); /* Pokéball red */
+  color: white;
+  padding: 1rem 2rem;
+  border: 3px solid #000;
+  border-radius: 999px; /* Pokéball shape */
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 0 #222;
+}
+
+.submit-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to bottom, #e60000, #990000);
+}
