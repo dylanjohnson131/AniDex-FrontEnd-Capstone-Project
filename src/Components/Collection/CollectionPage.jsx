@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
 import './CollectionPage.css';
+import {
+  fetchSightingsByUser,
+  fetchAnimalById,
+  deleteSighting,
+  updateSightingNotes
+} from '../../services/apiService';
 
 export const CollectionPage = () => {
   const [myCollection, setMyCollection] = useState([]);
@@ -12,12 +18,10 @@ export const CollectionPage = () => {
     setUser(loggedInUser);
     const fetchMyCollection = async () => {
       try {
-        const response = await fetch(`http://localhost:8088/Sightings?userId=${loggedInUser.id}`);
-        const sightings = await response.json();
+        const sightings = await fetchSightingsByUser(loggedInUser.id);
 
         const animalPromises = sightings.map(async sighting => {
-          const animalResponse = await fetch(`http://localhost:8088/Animals/${sighting.animalId}`);
-          const animal = await animalResponse.json();
+          const animal = await fetchAnimalById(sighting.animalId);
           return { ...animal, sightingId: sighting.id, notes: sighting.notes, sighting: sighting };
         });
         const animals = await Promise.all(animalPromises);
@@ -32,17 +36,13 @@ export const CollectionPage = () => {
   }, []);
 
   const handleDelete = async (sightingId) => {
-    await fetch(`http://localhost:8088/Sightings/${sightingId}`, { method: "DELETE" });
-    setMyCollection(myCollection.filter(a => a.sightingId !== sightingId));
+    await deleteSighting(sightingId);
+    setMyCollection(myCollection.filter(animal => animal.sightingId !== sightingId));
     setShowModal(false);
   };
 
   const handleEdit = async (sightingId, newNotes) => {
-    await fetch(`http://localhost:8088/Sightings/${sightingId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ notes: newNotes })
-    });
+    await updateSightingNotes(sightingId, newNotes);
     setMyCollection(myCollection.map(animals =>
       animals.sightingId === sightingId ? { ...animals, notes: newNotes } : animals
     ));

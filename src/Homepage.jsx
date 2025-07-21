@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
+import { fetchSightingsByUser, fetchAnimalById } from "./services/apiService";
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
@@ -10,15 +11,13 @@ export default function HomePage() {
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     setUser(loggedInUser);
-  
+
     const fetchSightings = async () => {
       if (!loggedInUser) return;
-      const sightingsResponse = await fetch(`http://localhost:8088/Sightings?userId=${loggedInUser.id}`);
-      const sightings = await sightingsResponse.json();
+      const sightings = await fetchSightingsByUser(loggedInUser.id);
 
       const animalPromises = sightings.map(async sighting => {
-        const animalResponse = await fetch(`http://localhost:8088/Animals/${sighting.animalId}`);
-        const animal = await animalResponse.json();
+        const animal = await fetchAnimalById(sighting.animalId);
         return {
           id: sighting.id,
           name: animal.name,

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import './AniDexPage.css';
+import { fetchAnimals } from '../../services/apiService';
   
 export const AniDexPage = () => {
   const [animals, setAnimals] = useState([]);
 
   useEffect(() => {
-    const fetchAnimals = async () => {
-      const response = await fetch('http://localhost:8088/Animals');
-      const data = await response.json();
+    const getAnimals = async () => {
+      const data = await fetchAnimals();
       setAnimals(data);
     };
-    fetchAnimals();
+    getAnimals();
   }, []);
 
   return (

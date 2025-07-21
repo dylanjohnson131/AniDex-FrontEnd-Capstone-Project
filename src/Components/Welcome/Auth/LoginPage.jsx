@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+import { fetchUserByCredentials } from '../../../services/apiService';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,10 +13,7 @@ export const LoginPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:3000/users?email=${email}&password=${password}`
-      );
-      const data = await response.json();
+      const data = await fetchUserByCredentials(email, password);
 
       if (data.length === 1) {
         localStorage.setItem('user', JSON.stringify(data[0]));

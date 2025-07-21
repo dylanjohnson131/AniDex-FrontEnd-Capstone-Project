@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchCategories, fetchAnimals, createSighting } from '../../services/apiService';
 import './NewAnimalLog.css';
 
 export const LogNewAnimalPage = () => {
@@ -18,12 +19,10 @@ export const LogNewAnimalPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoryResponse = await fetch('http://localhost:8088/Categories');
-        const categoryData = await categoryResponse.json();
+        const categoryData = await fetchCategories();
         setCategories(categoryData);
 
-        const animalResponse = await fetch('http://localhost:8088/Animals');
-        const animalData = await animalResponse.json();
+        const animalData = await fetchAnimals();
         setAnimals(animalData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -44,22 +43,14 @@ export const LogNewAnimalPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const user = JSON.parse(localStorage.getItem('user'));
-    
     try {
-      const response = await fetch('http://localhost:8088/Sightings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          animalId: parseInt(formData.animalId),
-          region: formData.region,
-          date: new Date().toISOString(),
-          notes: formData.notes
-        }),
+      const response = await createSighting({
+        userId: user.id,
+        animalId: parseInt(formData.animalId),
+        region: formData.region,
+        date: new Date().toISOString(),
+        notes: formData.notes
       });
-
       if (response.ok) {
         navigate('/home');
       }

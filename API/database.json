@@ -127,6 +127,12 @@
       "email": "dylan@email.com",
       "password": "johnson",
       "id": 2
+    },
+    {
+      "userName": "me",
+      "email": "me@me",
+      "password": "me",
+      "id": 3
     }
   ],
   "Sightings": [
@@ -160,7 +166,14 @@
       "date": "2025-07-16T22:59:06.593Z",
       "notes": "He was actually very nice, he lives with me now.",
       "id": 4
+    },
+    {
+      "userId": 3,
+      "animalId": 4,
+      "region": "South",
+      "date": "2025-07-21T19:58:37.054Z",
+      "notes": "bog fog",
+      "id": 5
     }
-    
   ]
 }
