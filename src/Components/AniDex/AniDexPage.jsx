@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
 import './AniDexPage.css';
-
-// We are creating and exporting a function called AniDexPage 
+  
 export const AniDexPage = () => {
- // State to hold the list of animals
   const [animals, setAnimals] = useState([]);
-//useEffect hook so that we can fetch the data from
-// the animals array in the database from the API
+
   useEffect(() => {
     const fetchAnimals = async () => {
-      const response = await fetch('http://localhost:3000/Animals');
-      //here we will turn the response into json format
+      const response = await fetch('http://localhost:8088/Animals');
       const data = await response.json();
-    //Update state with fetched animal data
       setAnimals(data);
     };
     fetchAnimals();

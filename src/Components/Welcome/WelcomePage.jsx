@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import './WelcomePage.css';
 
-// create and export the WelcomePage component to display the welcome page.
-// It provides links to the login and registration pages.
 export const WelcomePage = () => {
  return (
   <div className="welcome-container">

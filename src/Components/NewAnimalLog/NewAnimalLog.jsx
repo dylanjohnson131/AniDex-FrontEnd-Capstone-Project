@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NewAnimalLog.css';
-//create and export the logNewAnimalPage component. We will use state
-//to hold the list of categories, animals, and filtered animals.
-//We will also use state to hold the form data for logging a 
-// new animal sighting and set its initial values as empty strings.
+
 export const LogNewAnimalPage = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -18,17 +15,14 @@ export const LogNewAnimalPage = () => {
     imageUrl: ''
   });
 
-  // Fetch categories and animals when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch categories
-        const categoryResponse = await fetch('http://localhost:3000/Categories');
+        const categoryResponse = await fetch('http://localhost:8088/Categories');
         const categoryData = await categoryResponse.json();
         setCategories(categoryData);
 
-        // Fetch all animals
-        const animalResponse = await fetch('http://localhost:3000/Animals');
+        const animalResponse = await fetch('http://localhost:8088/Animals');
         const animalData = await animalResponse.json();
         setAnimals(animalData);
       } catch (error) {
@@ -38,24 +32,8 @@ export const LogNewAnimalPage = () => {
     fetchData();
   }, []);
 
- 
-  // We are using the useEffect hook to filter the animals based on the
-  // selected region and category. The filtered animals will be used to 
-  // display the animal options in the form.
-
-  //Update the list of animals shown as radio buttons based on 
-  // the users selections
   useEffect(() => {
-    //animals.filter goes through every animal in the database
     const filtered = animals.filter(animal => {
-      // !formData.category checks if the user has not selected a category
-      //yet. If formData.category is an empty string, !formData.category is 
-      // true. this means if no category is selected, all animals will match.
-      // If a category is selected, it checks if the animal's categoryID matches
-      // this is basically saying if a user hasn't selected a region and category,
-      // all animals will render but if the user has selected a region and category
-      // then only the animals that match the selected region and category will be rendered.
-
       const matchesCategory = !formData.category || animal.categoryID === parseInt(formData.category);
       const matchesRegion = !formData.region || animal.region.split(', ').includes(formData.region);
       return matchesCategory && matchesRegion;
@@ -68,7 +46,7 @@ export const LogNewAnimalPage = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     
     try {
-      const response = await fetch('http://localhost:3000/Sightings', {
+      const response = await fetch('http://localhost:8088/Sightings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +55,6 @@ export const LogNewAnimalPage = () => {
           userId: user.id,
           animalId: parseInt(formData.animalId),
           region: formData.region,
-          // create a string to represent the current date and time in ISO format
           date: new Date().toISOString(),
           notes: formData.notes
         }),
@@ -136,7 +113,6 @@ export const LogNewAnimalPage = () => {
           </select>
         </div>
 
-        {/* Animal radio buttons */}
         {(formData.region && formData.category) && (
           <div className="form-group">
             <label>Animal</label>

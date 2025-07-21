@@ -1,8 +1,6 @@
 import "./NavBar.css"
 import { Link } from "react-router-dom"
-// Creating and exporting the navbar component and linking it to the
-//main pages of the app which are:
-//homepage, AniDex page, collection page, and log new animal page.
+
 export const NavBar = () => {
     return (<ul className="navbar">
       <li className="navbar-item">

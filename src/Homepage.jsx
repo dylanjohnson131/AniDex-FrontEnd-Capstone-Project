@@ -2,32 +2,22 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
 
-// create and export the HomePage component which holds state to list the
-// user and recent sightings
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [recentSightings, setRecentSightings] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get logged in user from localStorage
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     setUser(loggedInUser);
-
-    // create a async function called fetchSightings, 
-    // which fetches the user's sightings and their associated animal details
-    // fetchSightings gets all sightings for the logged-in user, then 
-    // fetches the animal details for each sighting. It combines sighting
-    // info and animal info into one object for display.
+  
     const fetchSightings = async () => {
       if (!loggedInUser) return;
-      // Fetch user's sightings
-      const sightingsResponse = await fetch(`http://localhost:3000/Sightings?userId=${loggedInUser.id}`);
+      const sightingsResponse = await fetch(`http://localhost:8088/Sightings?userId=${loggedInUser.id}`);
       const sightings = await sightingsResponse.json();
 
-      // For each sighting, fetch the animal details
       const animalPromises = sightings.map(async sighting => {
-        const animalResponse = await fetch(`http://localhost:3000/Animals/${sighting.animalId}`);
+        const animalResponse = await fetch(`http://localhost:8088/Animals/${sighting.animalId}`);
         const animal = await animalResponse.json();
         return {
           id: sighting.id,
@@ -45,7 +35,6 @@ export default function HomePage() {
     fetchSightings();
   }, []);
 
-  // function to handle sign out 
   const handleSignOut = () => {
     localStorage.removeItem('user');
     navigate('/');
