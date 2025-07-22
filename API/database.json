@@ -133,6 +133,18 @@
       "email": "me@me",
       "password": "me",
       "id": 3
+    },
+    {
+      "userName": "dylan",
+      "email": "dylan@emaila.com",
+      "password": "johnson",
+      "id": 4
+    },
+    {
+      "userName": "steve",
+      "email": "coolsteve@email.com",
+      "password": "steve",
+      "id": 5
     }
   ],
   "Sightings": [

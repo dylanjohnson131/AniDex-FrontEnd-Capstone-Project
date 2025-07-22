@@ -140,17 +140,6 @@ export const LogNewAnimalPage = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label>Image URL</label>
-          <input
-            type="url"
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleChange}
-            placeholder="Enter image URL"
-          />
-        </div>
-
         <button type="submit" className="submit-button">
           Log Sighting
         </button>
